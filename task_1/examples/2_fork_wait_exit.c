@@ -8,6 +8,7 @@
 int main()
 {
 	const pid_t pid = fork();
+printf("fork's pid  %d  ", pid);
 	if (pid < 0) {
 		printf("fork() error\n");
 		return -1;
