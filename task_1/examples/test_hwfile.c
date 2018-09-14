@@ -43,21 +43,19 @@ if (pid) {//parent
 		goto start;}
 
 
-
-
-
 // child
-
-
 // 1) преобразование
+
+
+
    cmdmas=malloc(sizeof(char*)*100);
     char delim[] = " ,-/?";
-    i=0;
+
       for (char *p = strtok(cmd,delim); p != NULL; p = strtok(NULL, delim))
- {
-            *(cmdmas+i)=p;
-			i++;       
- }
+        {
+                *(cmdmas+i)=p;
+			i++;        }
+// *(cmdmas)='/bin/
 
 // 2) выполнение
 
