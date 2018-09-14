@@ -1,31 +1,76 @@
-/* this example shows how to implement the simplest solution of homework 1. */
-#include <unistd.h>
 #include <stdio.h>
-/* put your headers here */
-
-static void run_cmd(const char *cmd)
-{
-  const pid_t = fork();
-  if (pid < 0) {
-    printf("fork failed!\n");
-  }
-  if (pid) {
-    waitpid(pid, NULL,0);
-    /* add status check here (use examples) */
-    return;
-  }
-  
-  char **args=parse_cmd(cmd); // implement this function by yourself
-  execvp(args[0], args);
-  printf("exec* failed\n");
-}
+#include <stdlib.h>
+#include <ctype.h>
+#include <unistd.h> 
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <string.h>
 
 int main()
 {
+char **cmdmas; 
+int i;
+
+
+start:
   while(1) {
     char *cmd;
-    // read cmd here
-    run_cmd(cmd);
+    
+    cmd=malloc(sizeof(char)*100);
+
+printf("ENTER CMD OR 'q' >>>\n");
+scanf("%s", cmd);
+
+
+    if (*(cmd) == 'q'){ return 0;}
+
+
+
+
+  int status;
+  const pid_t pid = fork();
+      
+if (pid < 0) {
+		printf("fork() error\n");
+	}
+
+
+if (pid) {//parent
+		waitpid(pid, &status, 0);
+        printf("Return code: %d\n", WEXITSTATUS(status));
+    //free(cmdmas);
+    //for(i = 0; i < 6; ++i)
+      //  printf("%s ", cmdmas[i]);
+    
+		goto start;}
+
+
+// child
+// 1) преобразование
+
+
+ 
+   cmdmas=malloc(sizeof(char*)*100);
+    char delim[] = " ,-\n";
+    char** str_arg = malloc(sizeof(char*)*100);
+
+
+      for (char *p = strtok(cmd,delim); p != NULL; p = strtok(NULL, delim))
+        {
+                *(cmdmas+i)=p;
+			i++;
+        }
+
+
+
+
+
+// 2) выполнение
+
+execvp(cmdmas[0],cmdmas);
+printf("exec* failed\n");
+
+
   }
-  return 0;
+  return 0; 
  }

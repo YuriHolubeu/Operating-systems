@@ -1,26 +1,20 @@
-/* пример демонстрирует разбиение строки на токены, которые, например, можно подавать как аргументы в execlp (материал для домашней работы №1). Обратите внимание, как осуществляется чтение следующего токена (см. man strtok). Что произойдёт, если strtok(NULL, delim) заменить на strtok(s,delim)?
-
-Следует отметить, что strtok является "небезопасной" по 2-м причинам:
-1) Она не является реэнтерабельной (устойчиво работающей с одновременным доступом из нескольких процессов; для такой работы следует использовать strtok_r).
-2) Может изменять (и в общем случае это и делает) свой первый аргумент.
-
-Для хранения полученной строки рекомендуется сделать strdup или strcpy, т.е. скопировать строку куда нужно. 
-
-*/
 #include <stdio.h>
 #include <string.h>
 
 int main()
 {
-        char *p;
+       // char *p;
         char delim[] = " ,-\n";
-        char s[] = "This is \n a   -string ";
+        char s[] = "This is \n a   -string \n";
         printf("\nWhole string: %s", s);
         printf("Splitted string:\n");
 
-        for (char *p = strtok(s,delim); p != NULL; p = strtok(NULL, delim))
-        {
+
+char *p = strtok(s,delim);
+p = strtok(NULL, delim);
                 puts(p);
-        }
+
+       // for (char *p = strtok(s,delim); p != NULL; p = strtok(NULL, delim))
+        // {               puts(p);      }
         return 0;
 }
