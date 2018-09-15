@@ -8,8 +8,10 @@
 
 int main()
 {
+
+printf("%d    %ld", sizeof(char), sizeof(char*));
 char **cmdmas;
-int i=0;
+long unsigned int i=0;
 
 
 start:
@@ -51,7 +53,7 @@ if (pid) {//parent
 
 // 1) преобразование
    cmdmas=malloc(sizeof(char*)*100);
-    char delim[] = " ,-/?";
+    char delim[] = " ,/?";
 
       for (char *p = strtok(cmd,delim); p != NULL; p = strtok(NULL, delim))
  {
