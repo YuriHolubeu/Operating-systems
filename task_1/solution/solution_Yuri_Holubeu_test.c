@@ -58,7 +58,7 @@ if (pid) {//parent
       for (char *p = strtok(cmd,delim); p != NULL; p = strtok(NULL, delim))
  {
             *(cmdmas+i)=p;
-			i++;       
+			i++;
  }
 
 // 2) выполнение

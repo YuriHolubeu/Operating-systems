@@ -23,6 +23,6 @@ int main() {
 	pthread_create(&id2, NULL, cnt_routine, &offset2);
 	pthread_join(id1, NULL);
 	pthread_join(id2, NULL);
-	printf("Result of counting: %lld\n",sum );
+	printf("Result of counting: %lld, %d, %d\n",sum, offset1, offset2);
 	return 0;
 }

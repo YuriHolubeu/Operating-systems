@@ -6,7 +6,7 @@ int main()
 {
   char buf[4096];
   int size;
-  int fd[1];
+  int fd[2];
 
   if (pipe(fd) < 0) {
     printf("Pipe creation is failed!\n");

@@ -1,5 +1,7 @@
-/* This is example of POSIX counting semaphore usage. It differs from SYS V semaphores which are basic in lectures course.
-Nevertheless, it is more logically correspond to Dijksta's classical semaphores (1965) and recommended for usage too.
+/* This is example of POSIX counting semaphore usage.
+ It differs from SYS V semaphores which are basic in lectures course.
+Nevertheless, it is more logically correspond to Dijksta's classical
+semaphores (1965) and recommended for usage too.
 Finally, the POSIX implementation is more modern than SYS V.
 */
 /* usage of this example:

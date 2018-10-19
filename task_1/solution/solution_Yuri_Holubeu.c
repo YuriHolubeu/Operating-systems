@@ -12,8 +12,8 @@ char **cmdmas;
 int i=0;
 
 
-start:
-  while(1) {
+start: ;
+
     char* cmd;
 
     cmd=malloc(sizeof(char)*100);
@@ -44,27 +44,26 @@ if (pid) {//parent
 		goto start;}
 
 
-// child
 
 
+char *token;
 
-
-// 1) преобразование
    cmdmas=malloc(sizeof(char*)*100);
     char delim[] = " ,-/?";
+    token=strtok(cmd, delim);
 
-      for (char *p = strtok(cmd,delim); p != NULL; p = strtok(NULL, delim))
- {
-            *(cmdmas+i)=p;
-			i++;       
- }
+      while (token!=NULL){
+         token = strtok(NULL, delim);
+*(cmd+i)=token;
+i++;
 
-// 2) выполнение
+if (!strcmp(token, "cd")){
+execl("/bin/sh", "-c", token, NULL);
+}
 
-execvp(cmdmas[0],cmdmas);
-printf("exec* failed\n");
-
+execvp(cmdmas[0], cmdmas);
 
   }
+
   return 0;
- }
+}

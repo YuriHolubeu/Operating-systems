@@ -7,7 +7,7 @@ extern int errno;
 int main ()
 {
   FILE *ptrFile;
-  ptrFile = fopen ("fodsfksgjskgjwgjwglwrg.txt","rb");
+  ptrFile = fopen ("fodsfksgjskgjwgjwglwrg.txt","r");
   if (ptrFile == NULL)
   {
     perror("Case with prefix");

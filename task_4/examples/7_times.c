@@ -2,9 +2,10 @@
  * execute the program specified as its first argument.
  * The time is printed in seconds, on standard out.
 
- * The code is taken from QNX OS examples and modified to use CLOCK_MONOTONIC from HPET timer. It is fully Linux compatible
+ * The code is taken from QNX OS examples and modified to use CLOCK_MONOTONIC
+ from HPET timer. It is fully Linux compatible
  */
- 
+
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
