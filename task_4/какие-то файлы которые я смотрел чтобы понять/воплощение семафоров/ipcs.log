@@ -1,0 +1,34 @@
+
+------ Message Queues --------
+key        msqid      owner      perms      used-bytes   messages    
+
+------ Shared Memory Segments --------
+key        shmid      owner      perms      bytes      nattch     status      
+0x00000000 294912     yura       600        524288     2          dest         
+0x00000000 557057     yura       600        524288     2          dest         
+0x00000000 18907138   yura       600        524288     2          dest         
+0x00000000 19922947   yura       600        524288     2          dest         
+0x00000000 983044     yura       600        524288     2          dest         
+0x00000000 9306117    yura       600        524288     2          dest         
+0x00000000 1081350    yura       600        524288     2          dest         
+0x00000000 19693575   yura       600        524288     2          dest         
+0x00000000 1343496    yura       600        393216     2          dest         
+0x00000000 7143433    yura       600        393216     2          dest         
+0x00000000 3211274    yura       600        524288     2          dest         
+0x00000000 3244043    yura       600        524288     2          dest         
+0x00000000 3276812    yura       600        524288     2          dest         
+0x00000000 7405581    yura       600        4194304    2          dest         
+0x00000000 7307279    yura       600        393216     2          dest         
+0x00000000 7602192    yura       600        393216     2          dest         
+0x00000000 7634961    yura       600        1048576    2          dest         
+0x00000000 19955730   yura       600        4194304    2          dest         
+0x00000000 21561363   yura       600        524288     2          dest         
+0x00000000 18055188   yura       600        524288     2          dest         
+0x00000000 17072150   yura       600        4194304    2          dest         
+0x00000000 20774935   yura       600        393216     2          dest         
+0x00000000 21823513   yura       600        2097152    2          dest         
+
+------ Semaphore Arrays --------
+key        semid      owner      perms      nsems     
+0x00087a63 0          yura       666        1         
+

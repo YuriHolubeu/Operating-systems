@@ -1,5 +1,3 @@
-* Michael Ballantyne Homework 3 CMPT 351 Spring 2012 */
-
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,7 +24,7 @@ void *runner() {
             incircle_thread++;
         }
     }
-    
+
     pthread_mutex_lock(&mutex);
     incircle += incircle_thread;
     pthread_mutex_unlock(&mutex);
