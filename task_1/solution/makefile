@@ -1,3 +1,3 @@
 all:
 
-	gcc solution_Yuri_Holubeu.c
+	gcc 3d_solutionLOOKATME.c

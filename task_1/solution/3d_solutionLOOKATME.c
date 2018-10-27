@@ -37,7 +37,7 @@ if (pid < 0) {
           printf("Return code: %d\n", WEXITSTATUS(status));
 }
 
-if(pid<0){
+if(pid<1){
 
 
 
