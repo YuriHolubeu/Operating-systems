@@ -147,7 +147,7 @@ int main(int argc, char ** argv){
     if(counter == 0){       // Whole byte
       //printf("%ls\n", &out_char);
       write(STDOUT_FILENO, &out_char, 1);  //
-      //fflush(stdout);
+      fflush(stdout);
       counter=128;
       out_char = 0;
     }

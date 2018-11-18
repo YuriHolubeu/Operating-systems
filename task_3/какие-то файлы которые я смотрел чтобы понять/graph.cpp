@@ -23,7 +23,7 @@ int main() {
     double x = (i - (size));
     x = x*step;
     // EQUATION
-    double value = sin(x);
+    double value = sin(2*x);
     /// EQUATION
     value = value/step;
     values[i] = int(round(value));

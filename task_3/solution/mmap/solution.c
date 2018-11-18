@@ -10,23 +10,21 @@
 #include <time.h>
 
 int main() {
-  	int fdin;
+  	int input_fd;
 	struct stat statbuf;
 
-	fdin = open("XL.txt", O_RDONLY);	//open input file, file's size
-  	if(fdin<0){
+	input_fd = open("input.txt", O_RDONLY);	//open input file, file's size
+  	if(input_fd<0){
 		  printf("can't open input\n");
 		  exit(-1);
   	}
-	fstat(fdin, &statbuf);
+	fstat(input_fd, &statbuf);
 	int size = statbuf.st_size;
 	printf("size=[%d]\n",size);
 
-	void *addr = mmap(0, size, PROT_READ, MAP_SHARED, fdin, 0);	//mmap
-	close(fdin);
-	printf("Mapped at %p\n", addr);
-	/*int *shared = addr;
-  	printf("%c_%c\n", *shared, shared[1]);*/
+	void *addr = mmap(0, size, PROT_READ, MAP_SHARED, input_fd, 0);	//mmap
+	close(input_fd);
+
 
 	pid_t pid = fork();		//fork
 	if(pid<0){
@@ -50,11 +48,9 @@ int main() {
 		write(fdout, "", 1);
 
     		void *addrout = mmap(0, size, PROT_READ | PROT_WRITE, MAP_SHARED, fdout, 0);
-		printf("Mapped at %p\n", addrout);
 
-		//int *sh=addrout;
 
-		memcpy(addrout, addr, size);		//copy from addr to addrout
+		memcpy(addrout, addr, size);		//main action
 
 		int t2 = clock();
 		printf("time = %d\n", t2);

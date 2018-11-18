@@ -1,2 +1,2 @@
 all:
-	gcc mmap.c
+	gcc solution.c
