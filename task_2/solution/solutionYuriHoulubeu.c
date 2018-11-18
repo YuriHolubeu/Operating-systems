@@ -4,13 +4,15 @@
 #include<sys/types.h>
 #include<string.h>
 #include<sys/wait.h>
+#include <fcntl.h>
 
 int main()
 {
-    // We use two pipes
-    // First pipe to send input string from parent
-    // Second pipe to send concatenated string from child
 
+      char buf[4096];
+    buf[0]='\0';
+    char bufc[4096];
+    int size;
     int fd1[2];  // Used to store two ends of first pipe
     int fd2[2];  // Used to store two ends of second pipe
 
@@ -28,7 +30,6 @@ int main()
         return 1;
     }
 
-    scanf("%s", input_str);
     p = fork();
 
     if (p < 0)
@@ -41,46 +42,38 @@ int main()
     else if (p > 1)
     {
         char testSTR[100];
+        int fld = open("text.txt", O_RDONLY | O_APPEND);
+        if(fld < 0){
+                return 1;}
+  	     close(fd1[0]);
+         close(fd2[1]);
+         while((size = read(fld, buf, sizeof(buf)-1)) > 0)
+              {
+                    //  buf[size] = 0;
+                      write(fd1[1], buf, size);
+                      printf("Parent:Send to child: %s\n", buf);
 
-        close(fd1[0]);  // Close reading end of first pipe
+      		read(fd2[0], bufc, sizeof(bufc)-1);
+      	//	bufc[size]='\0';
+      		printf("Parent:Received from child: %s\n", bufc);
+              }
+        }
+        else {
+      	close(fd1[1]);
+          	close(fd2[0]);
 
-        // Write input string and close writing end of first 
-        // pipe.
-        write(fd1[1], input_str, strlen(input_str)+1);
-        close(fd1[1]);
+              int fld = open("text.txt", O_RDONLY | O_APPEND);
+          	while((size = read(fd1[0], buf, sizeof(buf)-1)) > 0)
+          	{
+            	//	buf[size] = '\0'; // the text string data is expected
+            		printf("Child:Received from parent: %s\n", buf);
 
-        // Wait for child to send a string
-        wait(NULL);
+      		read(fld, bufc, sizeof(bufc) -1);
+      		//bufc[size]=0;
+      		write(fd2[1], bufc, size);
+      		printf("Child:Send to parent: %s\n", bufc);
+          	}
+        }
 
-        close(fd2[1]); // Close writing end of second pipe
-
-        // Read string from child, print it and close
-        // reading end.
-        read(fd2[0], testSTR, 100);
-        printf("Concatenated string %s\n", testSTR);
-        close(fd2[0]);
-    }
-
-    // child process
-    else
-    {
-        close(fd1[1]);  // Close writing end of first pipe
-
-        // Read a string using first pipe
-        char testSTR[100];
-        read(fd1[0], testSTR, 100);
-
-        // Concatenate a fixed string with it
-
-
-        // Close both reading ends
-        close(fd1[0]);
-        close(fd2[0]);
-
-        // Write concatenated string and close writing end
-        write(fd2[1], testSTR, strlen(testSTR)+1);
-        close(fd2[1]);
-
-        exit(0);
-    }
-}
+        return 0;
+      }
