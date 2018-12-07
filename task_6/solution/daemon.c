@@ -1,17 +1,23 @@
-/* Программа рекурсивно распечатывает полные пути к директориям и регулярным файлам,
- начиная с текущей директории. Данный пример немного отличается от рассмотренного на
- семинаре, однако смысл один и тот же */
+      #include <string.h>
+      #include <sys/stat.h>
+      #include <sys/types.h>
+      #include <netinet/in.h>
+      #include <sys/time.h>
+      #include <sys/socket.h>
+      #include <sys/un.h>
+      #include <unistd.h>
+      #include <signal.h>
+      #include <sys/wait.h>
+      #include <resolv.h>
+      #include <errno.h>
+      #include <stdio.h>
+      #include <limits.h>
+      #include <dirent.h>
+      #include <stdlib.h>
 
 
-#include <stdio.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <dirent.h>
-#include <string.h>
-#include <limits.h>
-#include <unistd.h>
-
-void SearchDirectory(const char *name) {
+  res = mkdir("my_dir", S_IRUSR|S_IRGRP|S_IROTH|S_IXUSR);
+void Daemon(const char *name) {
     DIR *dir = opendir(name);               //Assuming absolute pathname here.
     if(dir) {
         char Path[PATH_MAX], *EndPtr = Path;
@@ -27,9 +33,14 @@ void SearchDirectory(const char *name) {
                     //Make corresponding directory in the target folder here.
                     printf("directory: %s/\n", Path);
                     ;
-          SearchDirectory(Path);   //Calls this function AGAIN, this time with the sub-name.
+          Daemon(Path);   //Calls this function AGAIN, this time with the sub-name.
                 } else if (S_ISREG(info.st_mode)) { //Or did we find a regular file?
                     ;
+
+                    //int res2;
+                    //res2 = system("diff file1.txt file2.txt");
+                    char s;
+                    s = system("file e");
                     //Run Copy routine
                     printf("reg_file: %s\n", Path);
                 }
@@ -39,11 +50,28 @@ void SearchDirectory(const char *name) {
     return;
 }
 
-int main() {
-    printf("Hello, World!\n");
-    char cwd[PATH_MAX];
-    if (getcwd(cwd, sizeof(cwd)) != NULL) {
-        SearchDirectory(strcat(cwd, "/"));
-    }
-    return 0;
+
+
+
+int main(int argc, char* argv[])
+{
+int res;
+//  res = mkdir("backup", S_IRUSR|S_IRGRP|S_IROTH|S_IXUSR);
+  char cwd[PATH_MAX];
+
+pid_t parpid;
+
+if((parpid=fork())<0)
+{
+   printf("\ncan't fork\n");
+  exit(1);}
+
+else if (parpid!=0)
+        exit(0);
+        setsid();
+        if (getcwd(cwd, sizeof(cwd)) != NULL) {
+            Daemon(strcat(cwd, "/"));
+        }
+
+return 0;
 }

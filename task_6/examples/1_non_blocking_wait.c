@@ -1,7 +1,9 @@
 /*Когда завершается потомок, родителю по умолчанию прилетает сигнал SIGCHLD.
-Напишем обработчик данного сигнала, который будет обрабатывать статус завершенного потомка в родителе.
-Это и будет неблокирующей имплементацией логики, функционально эквивалентной неблокирующему wait.
-
+Напишем обработчик данного сигнала, который будет обрабатывать статус завершенного
+ потомка в родителе.
+Это и будет неблокирующей имплементацией логики, функционально эквивалентной
+неблокирующему wait.
+*/
 signal(SIGCHLD, childHandler);
 
 void childHandler(int signum)
@@ -14,7 +16,7 @@ void childHandler(int signum)
     {
         if (WIFEXITED(childStatus))
         {
-            printf("PID %d exited normally.  Exit number:  %d\n", childpid, WEXITSTATUS(childStatus));
+    printf("PID %d exited normally.  Exit number:  %d\n", childpid, WEXITSTATUS(childStatus));
         }
         else
             if (WIFSTOPPED(childStatus))
@@ -24,7 +26,7 @@ void childHandler(int signum)
             else
                 if (WIFSIGNALED(childStatus))
                 {
-                    printf("PID %d exited due to signal %d\n.", childpid, WTERMSIG(childStatus));
+                  printf("PID %d exited due to signal %d\n.", childpid, WTERMSIG(childStatus));
                 }
                 else
                 {
