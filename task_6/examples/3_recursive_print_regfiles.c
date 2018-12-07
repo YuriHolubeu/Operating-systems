@@ -1,4 +1,7 @@
-/* Программа рекурсивно распечатывает полные пути к директориям и регулярным файлам, начиная с текущей директории. Данный пример немного отличается от рассмотренного на семинаре, однако смысл один и тот же */
+/* Программа рекурсивно распечатывает полные пути к директориям и регулярным файлам,
+ начиная с текущей директории. Данный пример немного отличается от рассмотренного на
+ семинаре, однако смысл один и тот же */
+
 
 #include <stdio.h>
 #include <sys/stat.h>
@@ -17,7 +20,8 @@ void SearchDirectory(const char *name) {
         strcpy(Path, name);                  //Copies the current path to the 'Path' variable.
         EndPtr += strlen(name);              //Moves the EndPtr to the ending position.
         while ((e = readdir(dir)) != NULL) {  //Iterates through the entire directory.
-            strcpy(EndPtr, e -> d_name);       //Copies the current filename to the end of the path, overwriting it with each loop.
+            strcpy(EndPtr, e -> d_name);       //Copies the current filename to the end of
+            //the path, overwriting it with each loop.
             if (!stat(Path, &info)) {         //stat returns zero on success.
                 if (S_ISDIR(info.st_mode)) {  //Are we dealing with a directory?
                     //Make corresponding directory in the target folder here.
