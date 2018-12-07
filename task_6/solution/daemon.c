@@ -16,7 +16,6 @@
       #include <stdlib.h>
 
 
-  res = mkdir("my_dir", S_IRUSR|S_IRGRP|S_IROTH|S_IXUSR);
 void Daemon(const char *name) {
     DIR *dir = opendir(name);               //Assuming absolute pathname here.
     if(dir) {
@@ -35,12 +34,16 @@ void Daemon(const char *name) {
                     ;
           Daemon(Path);   //Calls this function AGAIN, this time with the sub-name.
                 } else if (S_ISREG(info.st_mode)) { //Or did we find a regular file?
-                    ;
 
                     //int res2;
                     //res2 = system("diff file1.txt file2.txt");
                     char s;
-                    s = system("file e");
+                    const char *file ="file";
+                    //s = system("file e");
+
+                    //char *args[]={EndPtr, file, e->d_name, NULL};
+                    //execv(args[0],args);
+
                     //Run Copy routine
                     printf("reg_file: %s\n", Path);
                 }
@@ -56,7 +59,7 @@ void Daemon(const char *name) {
 int main(int argc, char* argv[])
 {
 int res;
-//  res = mkdir("backup", S_IRUSR|S_IRGRP|S_IROTH|S_IXUSR);
+ res = mkdir("backup", S_IRUSR|S_IRGRP|S_IROTH|S_IXUSR);
   char cwd[PATH_MAX];
 
 pid_t parpid;
@@ -70,7 +73,7 @@ else if (parpid!=0)
         exit(0);
         setsid();
         if (getcwd(cwd, sizeof(cwd)) != NULL) {
-            Daemon(strcat(cwd, "/"));
+            Daemon(strcat(cwd, "foldertest/"));
         }
 
 return 0;
