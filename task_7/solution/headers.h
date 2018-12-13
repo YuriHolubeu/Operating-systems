@@ -11,10 +11,12 @@
 #include <arpa/inet.h>
 #include <sys/wait.h>
 #include <signal.h>
-
+#include <strings.h>
 #include<fcntl.h>
 #include <sys/time.h>
 
+
+#define MAXDATASIZE 100 // max number of bytes we can get at once
 
 #define SA struct sockaddr
 #define PORT 3490  // the port users will be connecting to

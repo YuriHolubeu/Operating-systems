@@ -1,7 +1,7 @@
 // inspired by https://www.youtube.com/watch?v=esXw4bdaZkc&t=331s
 
 #include "headers.h"
-#include <strings.h>
+
 
 int main(int argc, char const *argv[]) {
 
