@@ -1,21 +1,5 @@
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <errno.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <netdb.h>
-#include <arpa/inet.h>
-#include <sys/wait.h>
-#include <signal.h>
-
-#define PORT "3490"  // the port users will be connecting to
-
-#define BACKLOG 10     // how many pending connections queue will hold
-
+#include"headers.h"
 ////////////////////////// here myst be code for registration client////////////
 
 
@@ -49,7 +33,7 @@ void *get_in_addr(struct sockaddr *sa)
 
 int main(void)
 {
-    int sockfd, new_fd;  // listen on sock_fd, new connection on new_fd
+    int         sockfd, new_fd;  // listen on sock_fd, new connection on new_fd
     struct addrinfo hints, *servinfo, *p;
     struct sockaddr_storage their_addr; // connector's address information
     socklen_t sin_size;

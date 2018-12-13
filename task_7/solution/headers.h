@@ -13,9 +13,10 @@
 #include <signal.h>
 
 #include<fcntl.h>
-##include <sys/time.h>
+#include <sys/time.h>
 
 
-#define PORT "3490"  // the port users will be connecting to
+#define SA struct sockaddr
+#define PORT 3490  // the port users will be connecting to
 #define MAXLINE 4096
 #define BACKLOG 10     // how many pending connections queue will hold

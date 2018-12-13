@@ -1,11 +1,11 @@
 // inspired by https://www.youtube.com/watch?v=esXw4bdaZkc&t=331s
 
 #include "headers.h"
-#include <stings.h>
+#include <strings.h>
 
-int int main(int argc, char const *argv[]) {
+int main(int argc, char const *argv[]) {
 
-    int listenfd, connfd, n
+    int listenfd, connfd, n;
     struct sockaddr_in servaddr;
 
     char buff [MAXLINE+1];
@@ -29,6 +29,40 @@ servaddr.sin_port = htons(PORT);
     printf("error 2\n" );
 if((listen(listenfd, 10))<0)
     printf("error 3\n" );
+
+
+for (;;){
+// accepting connections forever
+
+struct sockaddr_in addr;
+socklen_t addr_len;
+
+printf("waiting for connection at port %d\n", PORT );
+fflush (stdout); // cleaning stdout
+
+connfd = accept(listenfd, (SA*)NULL, NULL);
+
+memset(recvline, 0, MAXLINE); // cleaning buffer of received data
+
+//receiving
+while (n=read(connfd, recvline, MAXLINE-1)) {
+fprintf(stdout, "%s\n", recvline );
+memset(recvline, 0, MAXLINE);
+
+// here woulb be actions
+
+
+// responding//
+snprintf(buff,sizeof(buff), "respond string");
+write(connfd, buff, strlen(buff));
+close(connfd);
+printf("lol\n" );
+}
+
+
+}
+
+
 
 
   return 0;
