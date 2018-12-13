@@ -45,11 +45,13 @@ connfd = accept(listenfd, (SA*)NULL, NULL);
 memset(recvline, 0, MAXLINE); // cleaning buffer of received data
 
 //receiving
-while (n=read(connfd, recvline, MAXLINE-1)) {
+while ( (n=read(connfd, recvline, MAXLINE-1)) >0) {
 fprintf(stdout, "%s\n", recvline );
 memset(recvline, 0, MAXLINE);
 
-// here woulb be actions
+if (recvline[n-1]=='\n') break;
+
+// here would be actions
 
 
 // responding//
