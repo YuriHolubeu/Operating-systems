@@ -55,7 +55,9 @@ if (recvline[n-1]=='\n') break;
 
 
 // responding//
-snprintf(buff,sizeof(buff), "respond string");
+snprintf(buff,sizeof(buff), "HTTP/1.0 200 OK\r\n\r\nHello");
+// очень крутой код сверху, непонятно как, но если прописать
+//то, что прописано там, то происходит корректный вывод в браузер
 write(connfd, buff, strlen(buff));
 close(connfd);
 printf("lol\n" );
