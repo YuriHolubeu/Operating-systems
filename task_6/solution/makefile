@@ -1,5 +1,5 @@
 all: compile run
-compile: daemon.c
-	gcc daemon.c
+compile: cash.c
+	gcc cash.c
 run:
-	./a.out 
+	./a.out
