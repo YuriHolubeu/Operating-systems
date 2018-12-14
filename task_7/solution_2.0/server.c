@@ -4,7 +4,7 @@
 // Function designed for chat between client and server.
 void func(int sockfd)
 {
-    char buff[MAX];
+  char buff[MAX];
     int n;
     // infinite loop for chat
     for (;;) {
@@ -76,8 +76,19 @@ int main()
     else
         printf("server acccept the client...\n");
 
-    // Function for chatting between client and server
-    func(connfd);
+
+        char buff[MAX];
+        bzero(buff, MAX);
+        char message[] ="REGISTER: enter 123";
+        write(sockfd, message, sizeof(message));
+        read(sockfd, buff, sizeof(buff));
+        if (strcmp(buff, "123")==0)
+         //я знаю, что это не сравнение, но для начала и это сойдет
+        {
+          printf("welcome to server!\n");
+          func(connfd);
+}
+else printf("wrong password :(\n" );
 
     // After chatting close the socket
     close(sockfd);
