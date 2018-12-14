@@ -9,10 +9,15 @@ void func(int sockfd)
     // infinite loop for chat
     for (;;) {
         bzero(buff, MAX);
+        write(sockfd, "enter 123 to register:", sizeof("enter 123 to register"));
         // read the message from client and copy it in buffer
         read(sockfd, buff, sizeof(buff));
         // print buffer which contains the client contents
-        printf("From client: %s\t To client : ", buff);
+        printf("From client: %s", buff);
+
+      if(strncmp(buff, "123", 3)==0){
+        printf("connected!\n");
+      }
         bzero(buff, MAX);
         n = 0;
         // copy server message in the buffer
@@ -77,18 +82,7 @@ int main()
         printf("server acccept the client...\n");
 
 
-        char buff[MAX];
-        bzero(buff, MAX);
-        char message[] ="REGISTER: enter 123";
-        write(sockfd, message, sizeof(message));
-        read(sockfd, buff, sizeof(buff));
-        if (strcmp(buff, "123")==0)
-         //я знаю, что это не сравнение, но для начала и это сойдет
-        {
-          printf("welcome to server!\n");
           func(connfd);
-}
-else printf("wrong password :(\n" );
 
     // After chatting close the socket
     close(sockfd);

@@ -7,7 +7,12 @@ void func(int sockfd)
     int n;
     for (;;) {
         bzero(buff, sizeof(buff));
-        printf("Enter the string : ");
+        read(sockfd, buff, sizeof(buff));
+        printf("%s ", buff);
+// выше абзац - получение от сервера информации о регистрации
+        bzero(buff, sizeof(buff));
+
+
         n = 0;
         while ((buff[n++] = getchar()) != '\n')
             ;
