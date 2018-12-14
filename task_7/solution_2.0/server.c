@@ -2,11 +2,12 @@
 
 //я тут подумал, что неплохо бы на все повторяющиеся вещи функцию свою написать, но нет времени
 // Function designed for chat between client and server.
-void func(int sockfd)
+void func(int sockfd, int ip)
 {
   char buff[MAX];
   char buffanswer[MAX];
-
+  char ipofclient[12];
+  sprintf(ipofclient, "%d", ip);
 
     int n;
     // infinite loop for chat
@@ -35,27 +36,30 @@ void func(int sockfd)
 
 
           char a = buff[(strlen(buff)-2)];
-printf("%d - length %c\n",(strlen(buff)-2), a);
           switch (a) {
             case '1':
+            printf("%s took file 1\n", ipofclient);
              strcpy(buffanswer,"here is file 1\n");
             write(sockfd, buffanswer, sizeof(buffanswer));
             bzero(buffanswer, MAX);
             break;
 
             case '2':
+            printf("%s took file 2\n", ipofclient);
              strcpy(buffanswer,"here is file 2\n");
             write(sockfd, buffanswer, sizeof(buffanswer));
             bzero(buffanswer, MAX);
             break;
 
             case '3':
+            printf("%s took file 3\n", ipofclient);
              strcpy(buffanswer,"here is file 3\n");
             write(sockfd, buffanswer, sizeof(buffanswer));
             bzero(buffanswer, MAX);
             break;
 
             default:
+            printf("%s asked for unreal file\n", ipofclient);
              strcpy(buffanswer,"there is not such file \n");
             write(sockfd, buffanswer, sizeof(buffanswer));
             bzero(buffanswer, MAX);
@@ -93,6 +97,8 @@ else{
 // Driver function
 int main()
 {
+
+  while(1){
     int sockfd, connfd, len;
     struct sockaddr_in servaddr, cli;
 
@@ -136,10 +142,10 @@ int main()
     }
     else
         printf("server acccept the client...\n");
+        int ip = cli.sin_addr.s_addr;
+
+          func(connfd, ip);
+}
 
 
-          func(connfd);
-
-    // After chatting close the socket
-    close(sockfd);
 }
