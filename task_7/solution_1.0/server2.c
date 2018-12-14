@@ -41,11 +41,20 @@ printf("waiting for connection at port %d\n", PORT );
 fflush (stdout); // cleaning stdout
 
 connfd = accept(listenfd, (SA*)NULL, NULL);
-
+printf("enter a password 123\n" );
 memset(recvline, 0, MAXLINE); // cleaning buffer of received data
+n=read(listenfd, recvline, MAXLINE-1);
+if (strcmp(recvline,"123") ==0 ){
+printf("welcom to the server\n" );
+snprintf(buff,sizeof(buff), "welcom to the server");
+write(listenfd, buff, sizeof(buff));
 
+memset(buff, 0, sizeof(buff));
+memset(recvline, 0, MAXLINE);
 //receiving
-while ( (n=read(connfd, recvline, MAXLINE-1)) >0) {
+// важный момент, что читать только из FD cокета нужно,
+// а не из fd который мы из accept получили
+while ( (n=read(listenfd, recvline, MAXLINE-1)) >0) {
 fprintf(stdout, "%s\n", recvline );
 memset(recvline, 0, MAXLINE);
 
@@ -63,6 +72,9 @@ close(connfd);
 printf("lol\n" );
 }
 
+
+} // end of "if". вся работа с клиентом при условии, что правильный пароль
+// если не правильный - пусть еще раз вводит, на то цикл for
 
 }
 
