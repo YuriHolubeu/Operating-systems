@@ -1,5 +1,5 @@
-all: server2 client
-server2:
-	gcc -o server2 server2.c
-client:
-	gcc -o client client.c
+all:  client2 #server2
+#server2:
+#	gcc -o server2 server2.c
+client2:
+	gcc -o client2 client2.c
