@@ -16,8 +16,11 @@ void func(int sockfd)
         printf("From client: %s", buff);
 
       if(strncmp(buff, "123", 3)==0){
-        printf("connected!\n");
-      }
+        printf("comeone has connected!\n" );
+        write(sockfd, "connected\n", sizeof("connected\n"));
+
+      for (;;) {
+        // здесь настоящее взаимодействие и идет
         bzero(buff, MAX);
         n = 0;
         // copy server message in the buffer
@@ -31,6 +34,15 @@ void func(int sockfd)
             printf("Server Exit...\n");
             break;
         }
+}
+
+}
+else{
+  write(sockfd, "wrong password", sizeof("wrong password"));
+}
+
+
+
     }
 }
 
