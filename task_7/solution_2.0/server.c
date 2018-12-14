@@ -21,7 +21,7 @@ void func(int sockfd, int ip)
 
       if(strncmp(buff, "123", 3)==0){
 
-        printf("comeone has connected!\n" );
+        printf("%s comeone has connected!\n", ipofclient);
         char buffanswer[MAX]="connected! I have files 1, 2, 3, enter GET <number>\n";
         write(sockfd, buffanswer, sizeof(buffanswer));
         bzero(buffanswer, MAX);
