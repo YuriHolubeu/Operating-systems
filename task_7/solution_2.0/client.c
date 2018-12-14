@@ -6,21 +6,22 @@ void func(int sockfd)
     char buff[MAX];
     int n;
     for (;;) {
+      // чтение, что хочет сервер
         bzero(buff, sizeof(buff));
         read(sockfd, buff, sizeof(buff));
-        printf("%s ", buff);
-// выше абзац - получение от сервера информации о регистрации
+          printf("%s", buff);
         bzero(buff, sizeof(buff));
 
 
+// ответ серверу
         n = 0;
         while ((buff[n++] = getchar()) != '\n')
             ;
         write(sockfd, buff, sizeof(buff));
-
         bzero(buff, sizeof(buff));
-        read(sockfd, buff, sizeof(buff));
-        printf("From Server : %s", buff);
+
+
+
 
 
 

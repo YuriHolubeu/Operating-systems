@@ -1,10 +1,13 @@
 #include "headers.h"
 
-
+//я тут подумал, что неплохо бы на все повторяющиеся вещи функцию свою написать, но нет времени
 // Function designed for chat between client and server.
 void func(int sockfd)
 {
   char buff[MAX];
+  char buffanswer[MAX];
+
+
     int n;
     // infinite loop for chat
     for (;;) {
@@ -16,21 +19,62 @@ void func(int sockfd)
         printf("From client: %s", buff);
 
       if(strncmp(buff, "123", 3)==0){
+
         printf("comeone has connected!\n" );
-        write(sockfd, "connected\n", sizeof("connected\n"));
+        char buffanswer[MAX]="connected! I have files 1, 2, 3, enter GET <number>\n";
+        write(sockfd, buffanswer, sizeof(buffanswer));
+        bzero(buffanswer, MAX);
 
       for (;;) {
         // здесь настоящее взаимодействие и идет
         bzero(buff, MAX);
         n = 0;
-        // copy server message in the buffer
-        while ((buff[n++] = getchar()) != '\n')
-            ;
-        // and send that buffer to client
-        write(sockfd, buff, sizeof(buff));
+        read(sockfd, buff, sizeof(buff));
+        if ((strncmp("GET", buff, 3)==0)){
+          printf("client knows how to use server\n" );
 
-        // if msg contains "Exit" then server exit and chat ended.
-        if (strncmp("exit", buff, 4) == 0) {
+
+          char a = buff[(strlen(buff)-2)];
+printf("%d - length %c\n",(strlen(buff)-2), a);
+          switch (a) {
+            case '1':
+             strcpy(buffanswer,"here is file 1\n");
+            write(sockfd, buffanswer, sizeof(buffanswer));
+            bzero(buffanswer, MAX);
+            break;
+
+            case '2':
+             strcpy(buffanswer,"here is file 2\n");
+            write(sockfd, buffanswer, sizeof(buffanswer));
+            bzero(buffanswer, MAX);
+            break;
+
+            case '3':
+             strcpy(buffanswer,"here is file 3\n");
+            write(sockfd, buffanswer, sizeof(buffanswer));
+            bzero(buffanswer, MAX);
+            break;
+
+            default:
+             strcpy(buffanswer,"there is not such file \n");
+            write(sockfd, buffanswer, sizeof(buffanswer));
+            bzero(buffanswer, MAX);
+
+          }
+
+
+
+        }
+        else {
+          char buffanswer[MAX]="Inpropper usage!!! enter GET <number>\n";
+          write(sockfd, buffanswer, sizeof(buffanswer));
+          bzero(buffanswer, MAX);
+        }
+
+
+
+        // это никто не будет делать, просто на всякий случай пусть будет
+          if (strncmp("exit", buff, 4) == 0) {
             printf("Server Exit...\n");
             break;
         }
@@ -38,7 +82,7 @@ void func(int sockfd)
 
 }
 else{
-  write(sockfd, "wrong password", sizeof("wrong password"));
+  write(sockfd, "wrong password\n", sizeof("wrong password\n"));
 }
 
 
