@@ -33,7 +33,7 @@ void SearchDirectory(const char *name) {
   if(Path[(strlen(Path)-1)]=='t' && Path[(strlen(Path)-2)]=='x' && Path[(strlen(Path)-3)]=='t'){
 
 printf("we have a text file\n" );
-char backuppath[]="/home/yura/Desktop/programs/HW_3sem/3_sem/task_6/solution/backup";
+char backuppath[]=" /home/yura/Desktop/programs/HW_3sem/3_sem/task_6/solution/backup";
 
 /* почему это не работает?????
 char token[12];
@@ -59,24 +59,23 @@ int i;
 char *token = strtok (Path, "/"); //во втором параметре указаны разделители (пробел, запятая, точка)
 while (token != NULL) //пока есть лексемы
 {
-  printf("%s\n",token );
     token = strtok (NULL, " /");
     *(cmdmas+i)=token;
     i++;
 
 }
 
-printf("%s\n",cmdmas[i-2] );
+printf("file name: %s\n",cmdmas[i-2] );
 
-/*
-char nameoffile[10];
-printf("name of file %s\n", cmdmas[i-1]);
-strcat(command, token);
-strcat(command, backuppath);
+char command[10]="cp ";
+//command=malloc(sizeof(char*)*100);
+//command="cp";
+printf("%s\n", Path);
+strcat(cmdmas[i-2], backuppath);
+strcat(command, cmdmas[i-2]);
+printf("%s\n", command );
+system(command);
 
-int system(const char *command);
-
-*/
 
 
 
