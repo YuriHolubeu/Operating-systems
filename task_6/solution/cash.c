@@ -34,14 +34,49 @@ void SearchDirectory(const char *name) {
 
 printf("we have a text file\n" );
 char backuppath[]="/home/yura/Desktop/programs/HW_3sem/3_sem/task_6/solution/backup";
-char command [100]="cp";
-printf("name of file %s\n", info.d_name);
-strcat(command, info.d_name);
+
+/* почему это не работает?????
+char token[12];
+char **cmdmas;
+char **command;
+cmdmas=malloc(sizeof(char*)*100);
+command=malloc(sizeof(char*)*100);
+command="cp";
+printf("%s\n",Path );
+strcpy(token, strtok(Path, "/"));
+printf("%s\n",token );
+int i;
+while (token !="txt"){
+strcpy(token, strtok(NULL, "/."));
+printf("%s\n", token);
+//*(cmdmas+i)=token;
+//i++;
+}
+*/
+char **cmdmas;
+cmdmas=malloc(sizeof(char*)*100);
+int i;
+char *token = strtok (Path, "/"); //во втором параметре указаны разделители (пробел, запятая, точка)
+while (token != NULL) //пока есть лексемы
+{
+  printf("%s\n",token );
+    token = strtok (NULL, " /");
+    *(cmdmas+i)=token;
+    i++;
+
+}
+
+printf("%s\n",cmdmas[i-2] );
+
+/*
+char nameoffile[10];
+printf("name of file %s\n", cmdmas[i-1]);
+strcat(command, token);
 strcat(command, backuppath);
 
 int system(const char *command);
 
-
+*/
 
 
 

@@ -4,10 +4,7 @@
 
 int main(){
 
-char *original;
-char *token;
-  int status;
-char **cmdmas;
+
 
   while(1) {
 
@@ -41,7 +38,10 @@ if(pid<1){
 
 
 
-
+  char *original;
+  char *token;
+    int status;
+  char **cmdmas;
 token=strtok(original, " -,");
 int i;
 while (token !=NULL){
