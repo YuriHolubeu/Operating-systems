@@ -22,12 +22,34 @@ void SearchDirectory(const char *name) {
                 if (S_ISDIR(info.st_mode)) {  //Are we dealing with a directory?
                     //Make corresponding directory in the target folder here.
                     printf("directory: %s/\n", Path);
-                    ;
+
+
           SearchDirectory(Path);   //Calls this function AGAIN, this time with the sub-name.
                 } else if (S_ISREG(info.st_mode)) { //Or did we find a regular file?
                     ;
                     //Run Copy routine
                     printf("reg_file: %s\n", Path);
+
+  if(Path[(strlen(Path)-1)]=='t' && Path[(strlen(Path)-2)]=='x' && Path[(strlen(Path)-3)]=='t'){
+
+printf("we have a text file\n" );
+char backuppath[]="/home/yura/Desktop/programs/HW_3sem/3_sem/task_6/solution/backup";
+char command [100]="cp";
+printf("name of file %s\n", info.d_name);
+strcat(command, info.d_name);
+strcat(command, backuppath);
+
+int system(const char *command);
+
+
+
+
+
+
+}// end of differences
+
+
+
                 }
             }
         }
