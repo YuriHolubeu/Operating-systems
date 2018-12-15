@@ -1,0 +1,213 @@
+#include "headers.h"
+
+//я тут подумал, что неплохо бы на все повторяющиеся вещи функцию свою написать, но нет времени
+// Function designed for chat between client and server.
+void func(int sockfd, int ip)
+{
+  char buff[MAX];
+  char buffanswer[MAX];
+  char ipofclient[12];
+  sprintf(ipofclient, "%d", ip);
+
+    int n;
+    // infinite loop for chat
+    for (;;) {
+        bzero(buff, MAX);
+        write(sockfd, "enter 123 to register:", sizeof("enter 123 to register"));
+        // read the message from client and copy it in buffer
+        read(sockfd, buff, sizeof(buff));
+        // print buffer which contains the client contents
+        printf("From client: %s", buff);
+
+      if(strncmp(buff, "123", 3)==0){
+
+        printf("%s comeone has connected!\n", ipofclient);
+        char buffanswer[MAX]="connected! I have files 1, 2, 3, enter GET <number>\n";
+        write(sockfd, buffanswer, sizeof(buffanswer));
+        bzero(buffanswer, MAX);
+
+      for (;;) {
+        // здесь настоящее взаимодействие и идет
+        bzero(buff, MAX);
+        n = 0;
+        read(sockfd, buff, sizeof(buff));
+        if ((strncmp("GET", buff, 3)==0)){
+          printf("client knows how to use server\n" );
+
+
+          char a = buff[(strlen(buff)-2)];
+          switch (a) {
+            case '1':
+            printf("%s took file 1\n", ipofclient);
+             strcpy(buffanswer,"here is file 1\n");
+            write(sockfd, buffanswer, sizeof(buffanswer));
+            bzero(buffanswer, MAX);
+            break;
+
+            case '2':
+            printf("%s took file 2\n", ipofclient);
+             strcpy(buffanswer,"here is file 2\n");
+            write(sockfd, buffanswer, sizeof(buffanswer));
+            bzero(buffanswer, MAX);
+            break;
+
+            case '3':
+            printf("%s took file 3\n", ipofclient);
+             strcpy(buffanswer,"here is file 3\n");
+            write(sockfd, buffanswer, sizeof(buffanswer));
+            bzero(buffanswer, MAX);
+            break;
+
+            default:
+            printf("%s asked for unreal file\n", ipofclient);
+             strcpy(buffanswer,"there is not such file \n");
+            write(sockfd, buffanswer, sizeof(buffanswer));
+            bzero(buffanswer, MAX);
+
+          }
+
+
+
+        }
+        else {
+          char buffanswer[MAX]="Inpropper usage!!! enter GET <number>\n";
+          write(sockfd, buffanswer, sizeof(buffanswer));
+          bzero(buffanswer, MAX);
+        }
+
+
+
+        // это никто не будет делать, просто на всякий случай пусть будет
+          if (strncmp("exit", buff, 4) == 0) {
+            printf("Server Exit...\n");
+            break;
+        }
+}
+
+}
+else{
+  write(sockfd, "wrong password\n", sizeof("wrong password\n"));
+}
+
+
+
+    }
+}
+
+// Driver function
+int main()
+{
+
+  while(1){
+    int sockfd, connfd, len;
+    struct sockaddr_in servaddr, cli;
+
+    // socket create and verification
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    if (sockfd == -1) {
+        printf("socket creation failed...\n");
+        exit(0);
+    }
+    else
+        printf("Socket successfully created..\n");
+    bzero(&servaddr, sizeof(servaddr));
+
+    // assign IP, PORT
+    servaddr.sin_family = AF_INET;
+    servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
+    servaddr.sin_port = htons(PORT);
+
+    // Binding newly created socket to given IP and verification
+    if ((bind(sockfd, (SA*)&servaddr, sizeof(servaddr))) != 0) {
+        printf("socket bind failed...\n");
+        exit(0);
+    }
+    else
+        printf("Socket successfully binded..\n");
+
+    // Now server is ready to listen and verification
+    if ((listen(sockfd, 5)) != 0) {
+        printf("Listen failed...\n");
+        exit(0);
+    }
+    else
+        printf("Server listening..\n");
+    len = sizeof(cli);
+
+    // Accept the data packet from client and verification
+    connfd = accept(sockfd, (SA*)&cli, &len);
+    if (connfd < 0) {
+        printf("server acccept failed...\n");
+        exit(0);
+    }
+    else
+        printf("server acccept the client...\n");
+        int ip = cli.sin_addr.s_addr;
+
+
+
+
+
+          fd_set active_fd_set, read_fd_set;
+          int i;
+          FD_ZERO (&active_fd_set);
+          FD_SET (sockfd, &active_fd_set);
+
+          while (1)
+            {
+              /* Block until input arrives on one or more active sockets. */
+              read_fd_set = active_fd_set;
+              if (select (FD_SETSIZE, &read_fd_set, NULL, NULL, NULL) < 0)
+                {
+                  perror ("select");
+                  exit (EXIT_FAILURE);
+                }
+
+
+
+                struct sockaddr_in clientname;
+              /* Service all the sockets with input pending. */
+              for (i = 0; i < FD_SETSIZE; ++i)
+                if (FD_ISSET (i, &read_fd_set))
+                  {
+                    if (i == sockfd)
+                      {
+                        /* Connection request on original socket. */
+                        int new;
+
+                        int size = sizeof (clientname);
+                        new = accept (sockfd,
+                                      (struct sockaddr *) &clientname,
+                                      &size);
+                        if (new < 0)
+                          {
+                            perror ("accept");
+                            exit (EXIT_FAILURE);
+                          }
+                    fprintf (stderr,
+                             "Server: connect from host %s, port %hd.\n",
+                             inet_ntoa (clientname.sin_addr),
+                            ntohs (clientname.sin_port));
+                        FD_SET (new, &active_fd_set);
+                      }
+                    else
+                      {
+
+                         func(connfd, ip); 
+                          {
+                            close (i);
+                            FD_CLR (i, &active_fd_set);
+                          }
+                      }
+                  }
+            }
+
+
+
+
+
+
+}
+
+
+}
